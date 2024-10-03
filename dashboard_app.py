@@ -4,11 +4,10 @@ import seaborn as sns
 import streamlit as st
 from babel.numbers import format_currency
 from datetime import timedelta
-
-sns.set(style='dark')
+import sys
 
 def create_monthly_orders_df(df):
-    monthly_orders_df = df.resample(rule='M', on='order_purchase_timestamp').agg({
+    monthly_orders_df = df.resample(rule='ME', on='order_purchase_timestamp').agg({
         "order_id": "nunique",
         "price": "sum"
     })
@@ -46,7 +45,7 @@ def create_category_rating_df(df):
     
     return category_rating_df
 
-all_df = pd.read_csv("all_data.xls")
+all_df = pd.read_csv("all_data.csv")
 
 all_df['order_purchase_timestamp'] = pd.to_datetime(all_df['order_purchase_timestamp'])
 
